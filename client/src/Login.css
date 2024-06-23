@@ -1,0 +1,15 @@
+/* File: src/components/Login.css */
+
+.auth-container{
+  maxWidth: "400px";
+  margin: "50px auto";
+  padding: "20px";
+  boxShadow: "0 0 10px rgba(0,0,0,0.1)";
+  borderRadius: "8px";
+  backgroundColor: "#fff";
+}
+  .error-message {
+    color: red;
+    
+    margin-top: 10px;
+  }

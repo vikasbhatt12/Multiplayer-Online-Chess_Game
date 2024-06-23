@@ -1,0 +1,155 @@
+/* Container for the entire game */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+  }
+  
+  /* Card style for the room information */
+  .game-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .game-card h5 {
+    margin: 0;
+    margin-right: 10px;
+  }
+  
+  .game-card button {
+    padding: 5px 10px;
+    border: none;
+    background: #3f51b5;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative; /* Added for tooltip positioning */
+  }
+  
+  .game-card button:hover {
+    background: #303f9f;
+  }
+  
+  .tooltip {
+    position: absolute;
+    background-color: #3f51b5; /* Assuming this is the value of var(--vb-violet2) */
+    color: white; /* Assuming this is the value of var(--vb-yellow) */
+    font-size: 1.15rem;
+    top: -35px;
+    left: -25px;
+    padding: 5px 10px;
+    border-radius: 1rem;
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: bottom;
+    transition: all 250ms ease-in-out;
+  }
+  
+  .tooltip.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  /* Content area for the board and player list */
+  .game-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    flex-wrap: wrap; 
+    gap: 10px;
+  }
+  
+  /* Container for the chess board */
+  .board-container {
+    max-width: 400px;
+    max-height: 600px;
+    flex-grow: 1;
+    margin: 0 auto;
+    border: 2px solid #3f51b5;
+    border-radius: 10px;
+    /* overflow: hidden; */
+  }
+  
+  /* Player list styles */
+  .player-list {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    
+    margin-left: 20px;
+  }
+  
+  /* Overlay for the dialog */
+  .dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 7;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Dialog box styles */
+  .dialog {
+    background: white;
+    
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .dialog button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background: #AA01D2;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .dialog button:hover {
+    background: #303f9f;
+  }
+
+  .top_player{
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    height: 30px;
+   
+  }
+  
+  .bottom_player{
+    margin-left: 10px;
+    display: flex;
+    height: 30px;
+    align-items: center;
+    
+
+  }
+
+  .profile-pic {
+    width: 30px;          /* Adjust width as needed */
+    height: 30px;         /* Adjust height as needed */
+    border-radius: 50%;   /* Makes the image round */
+    object-fit: cover;    /* Ensures the image covers the entire area */
+    margin-right: 10px;   /* Optional: Adds space to the right of the image */
+  }
+
+  
+  
+  .timer {
+    font-size: 16px;     /* Adjust font size as needed */
+    margin-left: 10px;   /* Adjust spacing as needed */
+  }
+  
+
+  
+  

@@ -1,0 +1,86 @@
+/* Chat Container */
+.chat-container {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  width: 300px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  align-items: flex-start;
+}
+
+/* Chat Messages Area */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  align-items: flex-start;
+  width: 100%; /* Ensure it takes full width */
+}
+
+/* Individual Chat Message */
+.chat-message {
+  margin-bottom: 10px;
+  align-items: flex-start; 
+  word-wrap: break-word; /* Prevent long words from breaking the layout */
+  width: 100%; /* Ensure it takes full width */
+}
+
+/* Chat Input Area */
+.chat-input {
+  display: flex;
+  width: 100%; /* Ensure it takes full width */
+}
+
+/* Chat Input Field */
+.chat-input input {
+  flex: 1;
+  padding: 5px;
+  border-radius: 5px 0 0 5px; /* Rounded corners on the left side */
+  border: 1px solid #ccc;
+  border-right: none; /* Remove right border to blend with button */
+}
+
+/* Chat Input Button */
+.chat-input button {
+  padding: 5px 10px;
+  border-radius: 0 5px 5px 0; /* Rounded corners on the right side */
+  border: 1px solid #ccc;
+  background-color: #3f51b5;
+  color: white;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background-color: #303f9f;
+}
+
+/* Media Queries for Responsiveness */
+
+/* For tablets and larger devices */
+@media (min-width: 600px) {
+  .chat-container {
+    width: 350px; /* Increase width for larger screens */
+    height: 500px; /* Increase height for larger screens */
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 599px) {
+  .chat-container {
+    width: 100%; /* Full width on mobile */
+    height: 300px; /* Adjust height for mobile */
+    margin-left: 0; /* Remove left margin */
+    margin-top: 20px; /* Add top margin for spacing */
+  }
+
+  .chat-input input, .chat-input button {
+    padding: 10px; /* Increase padding for better touch interaction */
+  }
+
+  .chat-input button {
+    padding: 10px 15px; /* Adjust padding for better touch interaction */
+  }
+}
