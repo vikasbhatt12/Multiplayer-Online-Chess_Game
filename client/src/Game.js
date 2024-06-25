@@ -10,12 +10,66 @@ function Game({ players = [], room, orientation, cleanup, username }) {
   const [fen, setFen] = useState(chess.fen());
   const [over, setOver] = useState("");
   const copyMsgRef = useRef(null);
+  const [squareStyles, setSquareStyles] = useState({});
+  const [lastMove, setLastMove] = useState(null);
+  const [hoverSquare, setHoverSquare] = useState(null);
+  const [StylesLegal, setStylesLegal] = useState({});
+
+  const removeHighlightSquares = () => {
+    setSquareStyles({});
+  };
+
+  const removeHighlightLegalSquares = () => {
+    setStylesLegal({});
+  };
+
+  const highlightLegalSquare = (sourceSquare, squaresToHighlight) => {
+    const highlightStylesLegal = [sourceSquare].concat(squaresToHighlight).reduce((a, c) => {
+      return {
+        ...a,
+        [c]: {
+          background: "radial-gradient(circle, rgba(0, 0, 0, 0.4) 46%, transparent 40%)",
+          borderRadius: "50%",
+        }
+      };
+    }, {});
+
+    setStylesLegal({ ...highlightStylesLegal });
+  };
+
+  const highlightSquare = (sourceSquare, squaresToHighlight) => {
+    const highlightStyles = [sourceSquare].concat(squaresToHighlight).reduce((a, c) => {
+      return {
+        ...a,
+        [c]: {
+          background: "radial-gradient(circle, rgba(0, 0, 0, 0.4) 46%, transparent 40%)",
+          borderRadius: "50%",
+        }
+      };
+    }, {});
+
+    setSquareStyles(highlightStyles);
+  };
+
+  const updateSquareStyles = (move = null, hover = null) => {
+    const styles = {};
+    if (move) {
+      styles[move.from] = { backgroundColor: 'rgba(255, 255, 0, 0.4)' };
+      styles[move.to] = { backgroundColor: 'rgba(255, 255, 0, 0.4)' };
+    }
+    if (hover) {
+      styles[hover] = { backgroundColor: 'rgba(0, 0, 255, 0.3)' };
+    }
+    setSquareStyles(styles);
+  };
 
   const makeAMove = useCallback(
     (move) => {
       try {
         const result = chess.move(move);
         setFen(chess.fen());
+        setLastMove(move);
+        updateSquareStyles(move, hoverSquare);
 
         if (chess.isGameOver()) {
           if (chess.isCheckmate()) {
@@ -32,10 +86,13 @@ function Game({ players = [], room, orientation, cleanup, username }) {
         return null;
       }
     },
-    [chess]
+    [chess, hoverSquare]
   );
 
   function onDrop(sourceSquare, targetSquare) {
+    removeHighlightLegalSquares();
+    removeHighlightSquares();
+
     if (chess.turn() !== orientation[0]) return false;
     if (players.length < 2) return false;
 
@@ -73,12 +130,18 @@ function Game({ players = [], room, orientation, cleanup, username }) {
       }
     });
 
+    socket.on("hover", (square) => {
+      setHoverSquare(square);
+      updateSquareStyles(lastMove, square);
+    });
+
     return () => {
       socket.off('move');
       socket.off('playerDisconnected');
       socket.off('closeRoom');
+      socket.off('hover');
     };
-  }, [makeAMove, room, cleanup, players]);
+  }, [makeAMove, room, cleanup, players, lastMove]);
 
   const getPlayer = (color) => {
     if (!Array.isArray(players)) return null;
@@ -108,6 +171,37 @@ function Game({ players = [], room, orientation, cleanup, username }) {
     });
   };
 
+  const onMouseOverSquare = (square) => {
+    removeHighlightLegalSquares();
+
+    setHoverSquare(square);
+    const moves = chess.moves({
+      square: square,
+      verbose: true
+    });
+
+    if (moves.length === 0) return;
+
+    const squaresToHighlightLegal = moves.map(move => move.to);
+    highlightLegalSquare(square, squaresToHighlightLegal);
+
+    const squaresToHighlight = moves.map(move => move.to);
+    highlightSquare(square, squaresToHighlight);
+    updateSquareStyles(lastMove, square);
+    socket.emit("hover", square);
+  };
+
+  const onMouseOutSquare = () => {
+    removeHighlightLegalSquares();
+
+    setHoverSquare(null);
+    updateSquareStyles(lastMove);
+    socket.emit("hover", null);
+  };
+
+  // Combine squareStyles and StylesLegal into a single object
+  const combinedStyles = { ...squareStyles, ...StylesLegal };
+
   return (
     <div className="game-container">
       <div className="game-card">
@@ -132,6 +226,9 @@ function Game({ players = [], room, orientation, cleanup, username }) {
             position={fen}
             onPieceDrop={onDrop}
             boardOrientation={orientation}
+            onMouseOverSquare={onMouseOverSquare}
+            onMouseOutSquare={onMouseOutSquare}
+            customSquareStyles={combinedStyles} // Pass combined styles as a prop
           />
           <div className="bottom_player">
             <img

@@ -150,6 +150,25 @@
     margin-left: 10px;   /* Adjust spacing as needed */
   }
   
-
+  .square-55d63 {
+    position: relative;
+  }
+  
+  .square-55d63::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 75%;
+    height: 75%;
+    background:  rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  
+  .square-55d63.highlight {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+  }
   
   

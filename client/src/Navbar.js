@@ -1,7 +1,7 @@
 // File: src/components/Navbar.js
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import './Navbar.css'; // Import the CSS file
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -14,7 +14,10 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <nav className="navbar">
-      <h2>Chess Game
+      <h2>
+      <Link to={"/"}>
+        Chess Game
+        </Link>
       </h2>
       {isLoggedIn ? (
         <button onClick={handleLogout} className="nav-button">Logout</button>
