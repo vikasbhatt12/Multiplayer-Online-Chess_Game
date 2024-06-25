@@ -4,11 +4,16 @@ const { v4: uuidV4 } = require('uuid');
 const http = require('http');
 
 const app = express(); 
+app.use(cors({
+  origin: 'https://multiplayer-online-chess-game.vercel.app',  
+  methods: ['GET', 'POST'],
+}));
+
 const server = http.createServer(app);
 const port = process.env.PORT || 8080;
 
 const io = new Server(server, {
-  cors: '*',
+  cors: 'https://multiplayer-online-chess-game.vercel.app',
 });
 
 const rooms = new Map();
