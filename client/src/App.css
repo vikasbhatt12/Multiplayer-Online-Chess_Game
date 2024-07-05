@@ -3,6 +3,12 @@
 html,
 body {
     overflow: hidden;
+    padding: 0;
+    margin: 0;
+    background-image: url('/public/chess_back1.jpg');
+    background-size:cover;
+    background-position: center;
+    background-repeat:inherit;
     
 }
 
@@ -17,5 +23,17 @@ body {
   margin:0 ;
   padding: 0;
   flex-direction: column;
+  align-items: center;
+}
+
+.home-background {
+  background-image: url('/public/chess_back1.jpg');
+  background-size:cover;
+  background-position: center;
+  background-repeat:inherit;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
